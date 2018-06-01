@@ -8,7 +8,7 @@ RUN \
   apt-get install -y software-properties-common && \
   add-apt-repository -y ppa:max-c-lv/shadowsocks-libev && \
   apt-get update && \
-  apt-get install -y iputils-ping shadowsocks-libev iproute2 && \
+  apt-get install -y shadowsocks-libev iproute2 && \
   rm -rf /var/lib/apt/lists/*
 
 ADD entrypoint.sh /entrypoint.sh
