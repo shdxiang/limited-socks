@@ -4,19 +4,15 @@ Shadowsocks server with bandwidth limitation.
 
 ## Usage
 
-Example:
-
-- Download: 2 Mb = 256 KB = 2097152
-
-- Upload: 512 Kb = 64 KB = 524288
+Limit egress to 512 kB/s, i.e. 4 Mbit/s:
 
 ```
-docker run -dt -p 8000:8000 -e SHAPER_ARGS="eth0 2097152 524288" -e SS_SERVER_ARGS="-p 8000 -m aes-256-cfb -k password --fast-open" shdxiang/limited-socks
+docker run --cap-add=NET_ADMIN -dt -p 8000:8000 -e PASSWORD="password" -e LIMIT="rate 4mbit peakrate 8mbit burst 64kb" shdxiang/limited-socks
 ```
 
-It is equivalent to run following commands in container system:
+It is equivalent to run following commands in container:
 
 ```
-wondershaper eth0 2097152 524288
+tc qdisc add dev eth0 root tbf rate 4mbit peakrate 8mbit burst 64kb latency 50ms minburst 1540
 ss-server -p 8000 -m aes-256-cfb -k password --fast-open
 ```
