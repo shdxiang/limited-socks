@@ -1,5 +1,7 @@
 FROM ubuntu:16.04
 
+EXPOSE 8000/tcp
+
 RUN \
   apt-get update && \
   apt-get -y upgrade && \
